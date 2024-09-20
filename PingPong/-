@@ -1,0 +1,50 @@
+import pygame
+import sys
+from settings import *
+
+class Game():
+    def __init__(self):
+        pygame.init()
+        self.clock = pygame.time.Clock()
+        self.screen = pygame.display.set_mode((WIDTH,HEIGHT))
+        pygame.display.set_caption("PingPong")
+        self.player = Player(500,600)
+    def update(self):
+        run = True
+        while run:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                    sys.exit()
+
+            self.screen.fill("black")
+            self.player.update(self.screen)
+            pygame.display.update()
+            self.clock.tick(FPS)
+
+class Player():
+    def __init__(self,x,y):
+        self.player_x = x
+        self.player_y = y
+        self.player_speed = 10
+    def update(self,screen):
+        # get key input 
+        pressed = pygame.key.get_pressed()
+        if pressed[pygame.K_d]:
+            self.player_x += self.player_speed
+        elif pressed[pygame.K_a]:
+            self.player_x -= self.player_speed
+        # screen collision
+        if self.player_x > 1220:
+            self.player_x = 1220 
+        
+
+
+        pygame.draw.rect(screen,"white",(self.player_x,self.player_y,120,20))
+
+
+if __name__ == "__main__":
+    game = Game()
+    game.update()
+    
+
