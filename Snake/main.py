@@ -2,6 +2,50 @@ import pygame
 import sys
 from settings import *
 import random
+from PIL import Image
+
+class Start():
+    def __init__(self,screen):
+        self.screen = screen
+        self.clock = pygame.time.Clock()
+        self.img = Image.open("start.gif")
+        self.frames = []
+        self.load_frames()
+        self.frames_count = len(self.frames)
+        self.current_frame = 0
+
+    def load_frames(self):
+        try:
+            while True:
+                frame = self.img.copy()
+                frame = frame.convert("RGBA")  # In RGBA konvertieren
+                frame = frame.resize((1280, 720), Image.LANCZOS)  # Auf Fenstergröße anpassen
+                self.frames.append(pygame.image.fromstring(frame.tobytes(), frame.size, frame.mode))
+                print(f"Frame {len(self.frames)} loaded with size: {frame.size}")  # Debugging-Ausgabe
+                self.img.seek(len(self.frames))  # Zum nächsten Frame wechseln
+        except EOFError:
+            print("All frames loaded")  # Debugging-Ausgabe
+
+
+    def update(self):
+        run = True
+        while run:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        run = False
+                    if event.key == pygame.K_ESCAPE:
+                        run = False
+            
+            if self.frames_count > 0:
+                self.screen.blit(self.frames[self.current_frame] ,(0,0))
+                self.current_frame = (self.current_frame + 1) % self.frames_count
+
+
+            self.clock.tick(FPS)
+            pygame.display.update()
         
 class Food():
     def __init__(self,screen,snake):
@@ -28,15 +72,20 @@ class Game():
         pygame.display.set_caption("Snake")
         self.snake = Snake(0,0,self.screen)
         self.food = Food(self.screen,self.snake)
+        self.start = Start(self.screen)
         self.font = pygame.font.Font("Minecraftia.ttf",20)
         self.score = 0
-
+        self.start.update() 
     def update(self):
         run = True
         while run:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        self.start.update()
+
             self.screen.fill("darkgreen")
             self.snake.update()
             self.food.update()
