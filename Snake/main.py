@@ -24,6 +24,7 @@ class Start():
                 print(f"Frame {len(self.frames)} loaded with size: {frame.size}")  # Debugging-Ausgabe
                 self.img.seek(len(self.frames))  # Zum nächsten Frame wechseln
         except EOFError:
+
             print("All frames loaded")  # Debugging-Ausgabe
 
 
