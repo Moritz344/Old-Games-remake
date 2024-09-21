@@ -2,11 +2,12 @@
 Python remaking old games like pingpong.
 
 # Snake
-![Screenshot_4](https://github.com/user-attachments/assets/b5e55409-5c29-45c0-924c-2acef734a8ff)
+![snake](https://github.com/user-attachments/assets/9e42822b-0c36-4c28-9352-675566d55b6b)
+
 
 # PingPong
 
-![Screenshot_6](https://github.com/user-attachments/assets/eede5dc3-d76f-4074-b251-e69451bc1c09)
+![pingpong](https://github.com/user-attachments/assets/ad6d4edf-bb2e-4cc5-91c8-f556df143a58)
 
 # Usage
 ```
